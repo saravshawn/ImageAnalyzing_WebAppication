@@ -1,0 +1,43 @@
+
+<div mat-dialog-title class="pop-header">
+    
+    <div style="float: left;">
+        <h2 style="margin: 0;">Select Image & Upload</h2>
+    </div>
+    
+    <div style="float: right; cursor: pointer; line-height: 0px;">
+        <mat-icon mat-dialog-close matTooltip="close Dialog">close</mat-icon>
+    </div>
+</div>
+
+<mat-dialog-content class="dialog-content">
+
+    <div class="choose-image">
+        <span style="float: left; margin: 5px;">
+            <input type="file" (change)="onFileSelection($event)" accept="image/png, image/jpeg, image/gif"/>
+        </span>
+        <span style="float: right; margin: 5px;">
+            <button mat-raised-button mat-dialog-close color="primary" (click)="uploadFile()" [disabled]="!selectedFile">Upload</button>
+        </span>
+    </div>
+    
+    
+    
+   
+    
+
+<h2 style="margin: 0; word-wrap: break-word;" *ngIf="selectedFile"> <strong> SelectedImage </strong>: {{selectedFileName}}</h2>
+
+<div class="selected-image">
+    <span *ngIf="selectedFile">
+        <img [src]="selectedImage" alt="SelectedImage" style="width: 100%; height: 100%;" />
+    </span>
+    
+    <span *ngIf="!selectedFile">
+        <h3 style="color: rgb(27, 145, 248); font-weight: 600; padding-top: 160px;">Image will be displayed here once it is selected</h3>
+    </span>
+</div>
+
+</mat-dialog-content>
+
+

@@ -1,0 +1,70 @@
+<div style="text-decoration: solid;">
+    <div class="header">
+        <div class="page-header">
+            <div class="header-container">
+            <p class="header-title">Image Analyzer</p>
+            <span style="margin-left: auto; padding-right: 8px;">
+                <button class="button" mat-flat-button (click)="openDialog()">Upload Image</button>
+            </span>
+            </div>
+        </div>
+
+        <mat-progress-bar style="height: 6px;" mode="indeterminate" *ngIf="progressBar"></mat-progress-bar>
+        
+    </div>
+
+    <div class="check-box">
+    <mat-checkbox [checked]="checkSelect" (change)="selectionChange($event.checked)" [disabled]="imageDataList.length===0">
+        Select checkbox to Delete All images and it's metaData
+    </mat-checkbox>
+    </div>
+
+    <div class="card-container" [ngClass]="{'blur-content':checkSelect}" *ngIf="imageDataList.length!=0; else empty ">
+
+        <mat-card *ngFor="let data of imageDataList" class="card">
+            <mat-card-header>
+                <mat-card-title-group>
+                <mat-card-title style="word-break: break-all;">{{data.imageName}}</mat-card-title>
+                <mat-card-subtitle>FileName</mat-card-subtitle>
+                
+                </mat-card-title-group>
+                <div style="margin-left: auto;">
+                    <button mat-icon-button style="cursor: pointer;" (click)="deleteImage(data.fileName)" [matTooltip]="'Delete ' +data.imageName" [disabled]="checkSelect">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </mat-card-header>
+                <mat-card-content>
+                    <!-- <img mat-card-lg-image [src]="'http://localhost:3000/api/getOnlyImage/'+data.fileName" alt="ImageFile"> -->
+                    <div class="card-image-container">
+                        <img [src]="'http://localhost:3000/api/getOnlyImage/'+data.fileName" alt="Image" class="image" />
+                    </div>
+                    <br/>
+                    <p> <b style="padding-right: 10px;">Dimension : </b> <span style="font-weight: 500; font-size: large;">{{data.dimension}}</span> </p>
+                    <p> <b style="padding-right: 10px;">Size : </b> <span style="font-weight: 500; font-size: large;">{{data.size}}</span></p>
+                    <p> <b style="padding-right: 10px;">Extension : </b> <span style="font-weight: 500; font-size: large;">{{data.extension}}</span> </p>
+                    <div style="display: inherit;">
+                        <b>
+                        DominantColor : </b> 
+                        <div class="dominantColor-container" [ngStyle]="{'background-color':data.dominantColor}" ></div>
+                    </div>
+                    
+                        
+                    
+                </mat-card-content>
+        </mat-card>
+    </div>
+
+
+    <ng-template #empty>
+        <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <p id="animated-text" class=" animated-text" >
+            <span *ngFor="let letter of letters" class="empty-message">{{letter }} &nbsp;</span>
+        </p>
+        </div>
+    </ng-template>
+
+
+</div>
+
+
